@@ -1,14 +1,11 @@
 import React from 'react';
-import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HouseIcon from '@mui/icons-material/House';
 import GrassIcon from '@mui/icons-material/Grass';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SummarizeIcon from '@mui/icons-material/Summarize';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom'; // Import Link component
 import LogoutButton from './logoutbtn';
 import CurrentUserAvatar from './username';
@@ -75,11 +72,9 @@ export const mainListItems = (
         },
       }}
     >
-      <ListItemIcon>
-        <LogoutIcon />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
+      
     </ListItemButton>
+    <LogoutButton/>
   </React.Fragment>
 );
 

@@ -19,8 +19,24 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../../components/listItems';
 import CurrentUserAvatar from '../../components/username';
+import SensorLineChart from './chart';
 
 const drawerWidth = 240;
+
+const sensorData = [
+  { date: new Date('2024-02-01'), temperature: 25, humidity: 60, co2: 400, uv: 5 },
+  { date: new Date('2024-02-02'), temperature: 24, humidity: 62, co2: 410, uv: 6 },
+  // Add more sensor data as needed
+];
+
+
+
+const data = {
+  temperature: { value: 25, high: 30, optimal: 20, low: 10 },
+  humidity: { value: 60, high: 80, optimal: 50, low: 30 },
+  co2: { value: 400, high: 800, optimal: 300, low: 200 },
+  uv: { value: 5, high: 10, optimal: 3, low: 1 },
+};
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -159,7 +175,7 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
+              
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -169,7 +185,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  
+                 
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -187,8 +203,8 @@ export default function Dashboard() {
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column',height: 240 }}>
+                <SensorLineChart marginTop={40} sensorData={sensorData} />
                 </Paper>
               </Grid>
             </Grid>

@@ -16,7 +16,13 @@ const LogoutButton = () => {
         }
     };
     return (
-        <ListItemButton onClick={handleLogout}> {/* Replace with handleLogout function */}
+        <ListItemButton onClick={handleLogout}  
+        sx={{
+          '&:hover, &:focus': {
+            bgcolor: 'rgba(0, 105, 92, 0.2)', // Green color with 20% opacity
+          },
+        }}
+      > {/* Replace with handleLogout function */}
             <ListItemIcon>
                 <LogoutIcon />
             </ListItemIcon>
