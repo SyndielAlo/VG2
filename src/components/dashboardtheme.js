@@ -11,15 +11,13 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from '../../components/listItems';
-import CurrentUserAvatar from '../../components/username';
-import SensorLineChart from './chart';
+import mainListItems from './listItems';
+import CurrentUserAvatar from './username';
+
 
 const drawerWidth = 240;
 
@@ -28,8 +26,6 @@ const sensorData = [
   { date: new Date('2024-02-02'), temperature: 24, humidity: 62, co2: 410, uv: 6 },
   // Add more sensor data as needed
 ];
-
-
 
 const data = {
   temperature: { value: 25, high: 30, optimal: 20, low: 10 },
@@ -85,13 +81,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard({ children }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -154,11 +148,9 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-          {open && <CurrentUserAvatar />}
-        {mainListItems}
-      </List>
-      
-    
+            {open && <CurrentUserAvatar />}
+            {mainListItems}
+          </List>
         </Drawer>
         <Box
           component="main"
@@ -174,41 +166,8 @@ export default function Dashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                 
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column',height: 240 }}>
-                <SensorLineChart marginTop={40} sensorData={sensorData} />
-                </Paper>
-              </Grid>
-            </Grid>
-           
+            {/* This is the part that is editable */}
+            {children}
           </Container>
         </Box>
       </Box>

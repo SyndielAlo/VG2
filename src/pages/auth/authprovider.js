@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../../firebase/setup";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const AuthContext = React.createContext();
 
@@ -15,6 +17,8 @@ export function AuthProvider({ children }) {
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [isGoogleUser, setIsGoogleUser] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [redirecting, setRedirecting] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
@@ -25,28 +29,19 @@ export function AuthProvider({ children }) {
     if (user) {
       setCurrentUser({ ...user });
 
-      // Check if provider is email and password login
       const isEmail = user.providerData.some(
         (provider) => provider.providerId === "password"
       );
       setIsEmailUser(isEmail);
 
-      // Check if the auth provider is google or not
-      // const isGoogle = user.providerData.some(
-      //   (provider) => provider.providerId === GoogleAuthProvider.PROVIDER_ID
-      // );
-      // setIsGoogleUser(isGoogle);
-
-      // Fetch additional user data from Firestore
       try {
         const userDocRef = doc(db, "users", user.uid);
         const userDocSnapshot = await getDoc(userDocRef);
         if (userDocSnapshot.exists()) {
-          // Additional user data found in Firestore
           const userData = userDocSnapshot.data();
           setCurrentUser((prevUser) => ({
             ...prevUser,
-            userData, // Add additional user data to currentUser
+            userData,
           }));
         }
       } catch (error) {
@@ -60,19 +55,39 @@ export function AuthProvider({ children }) {
     }
 
     setLoading(false);
+    setRedirecting(false);
   }
 
-  const value = {
-    userLoggedIn,
-    isEmailUser,
-    isGoogleUser,
-    currentUser,
-    setCurrentUser,
-  };
+  useEffect(() => {
+    // Redirect to login if user is not logged in and tries to access pages other than "/", "/login", or "/register"
+    if (!loading && !userLoggedIn && !["/", "/login", "/register"].includes(window.location.pathname)) {
+      navigate("/login");
+    }
+  }, [loading, userLoggedIn, navigate]);
+
+  if (redirecting) {
+    return <LoadingSpinner />;
+  }
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider
+      value={{
+        userLoggedIn,
+        isEmailUser,
+        isGoogleUser,
+        currentUser,
+        setCurrentUser,
+      }}
+    >
+      {children}
     </AuthContext.Provider>
+  );
+}
+function LoadingSpinner() {
+  return (
+    <div className="loading-spinner">
+      <CircularProgress />
+      <p>Loading...</p>
+    </div>
   );
 }

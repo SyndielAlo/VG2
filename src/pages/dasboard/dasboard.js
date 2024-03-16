@@ -1,11 +1,13 @@
 import React from 'react';
-import Dashboard from './Dashboard';
-const DasboardPage = () => {
+import Dashboard from '../../components/dashboardtheme';
+
+const DashboardPage = () => {
+    
     return (
-        <div>
-            < Dashboard/>
-        </div>
+      <Dashboard>
+
+      </Dashboard>
     );
 };
 
-export default  DasboardPage;
+export default  DashboardPage;

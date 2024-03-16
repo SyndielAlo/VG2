@@ -5,26 +5,18 @@ import ListItemText from '@mui/material/ListItemText';
 import HouseIcon from '@mui/icons-material/House';
 import GrassIcon from '@mui/icons-material/Grass';
 import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { Link } from 'react-router-dom'; // Import Link component
 import LogoutButton from './logoutbtn';
-import CurrentUserAvatar from './username';
+import { Link } from 'react-router-dom'; // Import Link component
 
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton
+      component={Link}
+      to="/Home"
       sx={{
         display: 'flex',
         alignItems: 'center', // Center the items vertically
         justifyContent: 'center', // Center the items horizontally
-      }}
-    >
-      
-    </ListItemButton>
-    <ListItemButton
-      component={Link} // Use Link component instead of ListItemButton
-      to="/Home" // Specify the destination path
-      sx={{
         '&:hover, &:focus': {
           bgcolor: 'rgba(0, 105, 92, 0.2)', // Green color with 20% opacity
         },
@@ -36,8 +28,8 @@ export const mainListItems = (
       <ListItemText primary="GreenHouse Monitor" />
     </ListItemButton>
     <ListItemButton
-      component={Link} // Use Link component instead of ListItemButton
-      to="/PlantPage" // Specify the destination path
+      component={Link}
+      to="/PlantPage"
       sx={{
         '&:hover, &:focus': {
           bgcolor: 'rgba(0, 105, 92, 0.2)', // Green color with 20% opacity
@@ -50,8 +42,8 @@ export const mainListItems = (
       <ListItemText primary="Plant Records" />
     </ListItemButton>
     <ListItemButton
-      component={Link} // Use Link component instead of ListItemButton
-      to="/SettingsPage" // Specify the destination path
+      component={Link}
+      to="/SettingsPage"
       sx={{
         '&:hover, &:focus': {
           bgcolor: 'rgba(0, 105, 92, 0.2)', // Green color with 20% opacity
@@ -63,18 +55,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Settings" />
     </ListItemButton>
-    <ListItemButton
-      component={Link} // Use Link component instead of ListItemButton
-      to="/SettingsPage" // Specify the destination path
-      sx={{
-        '&:hover, &:focus': {
-          bgcolor: 'rgba(0, 105, 92, 0.2)', // Green color with 20% opacity
-        },
-      }}
-    >
-      
-    </ListItemButton>
-    <LogoutButton/>
+    <LogoutButton />
   </React.Fragment>
 );
 
